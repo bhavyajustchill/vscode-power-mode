@@ -1,24 +1,30 @@
 {
-  "name": "vscode-power-mode",
-  "displayName": "Power Mode",
-  "description": "Your code is powerful, unleash it! The extension made popular by Code in the Dark has finally made its way to VS Code.",
-  "version": "3.0.2",
-  "publisher": "hoovercj",
+  "name": "vscode-power-mode-reborn",
+  "displayName": "VS Code Power Mode Reborn",
+  "description": "Power Mode, reborn for modern VS Code. Your code is powerful, unleash it! A maintained fork of hoovercj/vscode-power-mode with fixes for VS Code 1.88+.",
+  "version": "1.0.0",
+  "publisher": "bhavyajustchill",
   "icon": "images/icon-large.png",
   "author": {
-    "name": "Cody Hoover",
-    "email": "vscode@codyhoover.com",
-    "url": "https://github.com/hoovercj"
+    "name": "Bhavya Popat",
+    "url": "https://github.com/bhavyajustchill"
   },
+  "contributors": [
+    {
+      "name": "Cody Hoover",
+      "email": "vscode@codyhoover.com",
+      "url": "https://github.com/hoovercj"
+    }
+  ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hoovercj/vscode-power-mode/issues"
+    "url": "https://github.com/bhavyajustchill/vscode-power-mode/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/hoovercj/vscode-power-mode.git"
+    "url": "https://github.com/bhavyajustchill/vscode-power-mode.git"
   },
-  "homepage": "https://github.com/hoovercj/vscode-power-mode",
+  "homepage": "https://github.com/bhavyajustchill/vscode-power-mode",
   "engines": {
     "vscode": "^1.22.0"
   },
@@ -48,16 +54,16 @@
   "contributes": {
     "commands": [
       {
-        "command": "powermode.enablePowerMode",
+        "command": "powermodeReborn.enablePowerMode",
         "title": "Enable Power Mode",
-        "when": "!config.powermode.enabled",
-        "enablement": "!config.powermode.enabled"
+        "when": "!config.powermodeReborn.enabled",
+        "enablement": "!config.powermodeReborn.enabled"
       },
       {
-        "command": "powermode.disablePowerMode",
+        "command": "powermodeReborn.disablePowerMode",
         "title": "Disable Power Mode",
-        "when": "config.powermode.enabled",
-        "enablement": "config.powermode.enabled"
+        "when": "config.powermodeReborn.enabled",
+        "enablement": "config.powermodeReborn.enabled"
       }
     ],
     "configuration": [
@@ -65,13 +71,13 @@
         "title": "General",
         "order": 0,
         "properties": {
-          "powermode.enabled": {
+          "powermodeReborn.enabled": {
             "order": 0,
             "default": false,
             "type": "boolean",
             "description": "Enable to activate POWER MODE!!!"
           },
-          "powermode.presets": {
+          "powermodeReborn.presets": {
             "order": 1,
             "type": "string",
             "enum": [
@@ -92,7 +98,7 @@
         "title": "Combo",
         "order": 1,
         "properties": {
-          "powermode.combo.location": {
+          "powermodeReborn.combo.location": {
             "order": 0,
             "type": "string",
             "default": "default",
@@ -110,17 +116,17 @@
             ],
             "description": "Control where all the combo information is visible."
           },
-          "powermode.combo.threshold": {
+          "powermodeReborn.combo.threshold": {
             "default": 0,
             "type": "number",
             "description": "The combo number needed to activate POWER MODE!!! and start shaking and exploding the screen! If the value is 0, POWER MODE will always be active."
           },
-          "powermode.combo.timeout": {
+          "powermodeReborn.combo.timeout": {
             "default": 10,
             "type": "number",
             "description": "The number of seconds before the combo resets. If the value is 0, the timer will never reset."
           },
-          "powermode.combo.counterEnabled": {
+          "powermodeReborn.combo.counterEnabled": {
             "type": "string",
             "default": "default",
             "enum": [
@@ -135,13 +141,13 @@
             ],
             "description": "Control whether the combo counter is visible."
           },
-          "powermode.combo.counterSize": {
+          "powermodeReborn.combo.counterSize": {
             "type": "number",
             "default": 3,
             "minimum": 0,
             "description": "Control the size of the Combo Meter text"
           },
-          "powermode.combo.timerEnabled": {
+          "powermodeReborn.combo.timerEnabled": {
             "type": "string",
             "default": "default",
             "enum": [
@@ -162,13 +168,13 @@
         "title": "Shake",
         "order": 2,
         "properties": {
-          "powermode.shake.enabled": {
+          "powermodeReborn.shake.enabled": {
             "order": 0,
             "type": "boolean",
             "default": true,
             "description": "Set to false to disable shaking while typing"
           },
-          "powermode.shake.intensity": {
+          "powermodeReborn.shake.intensity": {
             "type": "number",
             "default": 3,
             "description": "The intensity with which the screen shakes"
@@ -179,40 +185,40 @@
         "title": "Explosions",
         "order": 3,
         "properties": {
-          "powermode.explosions.enabled": {
+          "powermodeReborn.explosions.enabled": {
             "order": 0,
             "type": "boolean",
             "default": true,
             "description": "Set to false to disable explosions while typing"
           },
-          "powermode.explosions.maxExplosions": {
+          "powermodeReborn.explosions.maxExplosions": {
             "type": "number",
             "default": 1,
             "description": "The maximum number of simultaneous explosions"
           },
-          "powermode.explosions.size": {
+          "powermodeReborn.explosions.size": {
             "type": "number",
             "default": 6,
             "description": "The size of the explosions. For value X, the height is set to X rem and the width to X ch"
           },
-          "powermode.explosions.frequency": {
+          "powermodeReborn.explosions.frequency": {
             "type": "number",
             "default": 2,
             "description": "The number of key strokes needed to trigger an explosion. 2 means every second keystroke will explode, 1 means every key stroke."
           },
-          "powermode.explosions.offset": {
+          "powermodeReborn.explosions.offset": {
             "type": "number",
             "default": 0.35,
             "description": "The vertical offset of the explosions. Increasing it will move the explosions up, decreasing it will move them down."
           },
-          "powermode.explosions.customExplosions": {
+          "powermodeReborn.explosions.customExplosions": {
             "order": 16,
             "type": "array",
             "items": "string",
             "default": [],
             "markdownDescription": "This value will go into the 'url()' part of a background image. It should be a base64 encoded gif or **https** URL _without_ quotes."
           },
-          "powermode.explosions.backgroundMode": {
+          "powermodeReborn.explosions.backgroundMode": {
             "type": "string",
             "default": "mask",
             "enum": [
@@ -225,7 +231,7 @@
             ],
             "description": "Affects the css properties used to display the gif."
           },
-          "powermode.explosions.gifMode": {
+          "powermodeReborn.explosions.gifMode": {
             "type": "string",
             "default": "continue",
             "enum": [
@@ -238,7 +244,7 @@
             ],
             "description": "Control the 'playback' mode of the gifs."
           },
-          "powermode.explosions.explosionOrder": {
+          "powermodeReborn.explosions.explosionOrder": {
             "description": "Determines how the explosions are cycled. 'random' (default) picks from the list randomly. 'sequential' goes through the list in order, and a number will select the explosion at that (zero based)index in the list",
             "oneOf": [
               {
@@ -254,12 +260,12 @@
             ],
             "default": "random"
           },
-          "powermode.explosions.duration": {
+          "powermodeReborn.explosions.duration": {
             "description": "Determines how long an explosion lasts (in milliseconds). Set to 0 for it to last forever.",
             "type": "number",
             "default": 1000
           },
-          "powermode.explosions.customCss": {
+          "powermodeReborn.explosions.customCss": {
             "description": "Set custom CSS that will apply to the explosion element.",
             "type": "object",
             "default": {}
@@ -269,75 +275,75 @@
       {
         "title": "Deprecated",
         "properties": {
-          "powermode.comboThreshold": {
+          "powermodeReborn.comboThreshold": {
             "default": null,
-            "markdownDeprecationMessage": "Deprecated. Use `powermode.combo.threshold` instead."
+            "markdownDeprecationMessage": "Deprecated. Use `powermodeReborn.combo.threshold` instead."
           },
-          "powermode.comboTimeout": {
+          "powermodeReborn.comboTimeout": {
             "default": null,
-            "markdownDeprecationMessage": "Deprecated. Use `powermode.combo.timeout` instead."
+            "markdownDeprecationMessage": "Deprecated. Use `powermodeReborn.combo.timeout` instead."
           },
-          "powermode.enableComboCounter": {
+          "powermodeReborn.enableComboCounter": {
             "default": null,
-            "markdownDeprecationMessage": "Deprecated. Use `powermode.combo.counterEnabled` instead."
+            "markdownDeprecationMessage": "Deprecated. Use `powermodeReborn.combo.counterEnabled` instead."
           },
-          "powermode.enableComboTimer": {
+          "powermodeReborn.enableComboTimer": {
             "default": null,
-            "markdownDeprecationMessage": "Deprecated. Use `powermode.combo.timerEnabled` instead."
+            "markdownDeprecationMessage": "Deprecated. Use `powermodeReborn.combo.timerEnabled` instead."
           },
-          "powermode.enableStatusBarComboCounter": {
+          "powermodeReborn.enableStatusBarComboCounter": {
             "default": null,
             "description": "Set to false to disable showing the combo in the statusbar",
-            "markdownDeprecationMessage": "Use `powermode.combo.location` and `powermode.combo.counterEnabled` instead. This will be removed in a future version."
+            "markdownDeprecationMessage": "Use `powermodeReborn.combo.location` and `powermodeReborn.combo.counterEnabled` instead. This will be removed in a future version."
           },
-          "powermode.enableStatusBarComboTimer": {
+          "powermodeReborn.enableStatusBarComboTimer": {
             "default": null,
             "description": "Set to false to disable showing the timer in the statusbar",
-            "markdownDeprecationMessage": "Use `powermode.combo.location` and `powermode.combo.timerEnabled` instead. This will be removed in a future version."
+            "markdownDeprecationMessage": "Use `powermodeReborn.combo.location` and `powermodeReborn.combo.timerEnabled` instead. This will be removed in a future version."
           },
-          "powermode.enableShake": {
+          "powermodeReborn.enableShake": {
             "default": null,
-            "markdownDeprecationMessage": "Deprecated. Use `powermode.shake.enabled` instead."
+            "markdownDeprecationMessage": "Deprecated. Use `powermodeReborn.shake.enabled` instead."
           },
-          "powermode.shakeIntensity": {
+          "powermodeReborn.shakeIntensity": {
             "default": null,
-            "markdownDeprecationMessage": "Deprecated. Use `powermode.shake.intensity` instead."
+            "markdownDeprecationMessage": "Deprecated. Use `powermodeReborn.shake.intensity` instead."
           },
-          "powermode.explosionSize": {
+          "powermodeReborn.explosionSize": {
             "default": null,
-            "markdownDeprecationMessage": "Deprecated. Use `powermode.explosions.size` instead."
+            "markdownDeprecationMessage": "Deprecated. Use `powermodeReborn.explosions.size` instead."
           },
-          "powermode.explosionFrequency": {
+          "powermodeReborn.explosionFrequency": {
             "default": null,
-            "markdownDeprecationMessage": "Deprecated. Use `powermode.explosions.frequency` instead."
+            "markdownDeprecationMessage": "Deprecated. Use `powermodeReborn.explosions.frequency` instead."
           },
-          "powermode.explosionOffset": {
+          "powermodeReborn.explosionOffset": {
             "default": null,
-            "markdownDeprecationMessage": "Deprecated. Use `powermode.explosions.offset` instead."
+            "markdownDeprecationMessage": "Deprecated. Use `powermodeReborn.explosions.offset` instead."
           },
-          "powermode.customExplosions": {
+          "powermodeReborn.customExplosions": {
             "default": null,
-            "markdownDeprecationMessage": "Deprecated. Use `powermode.explosions.customExplosions` instead."
+            "markdownDeprecationMessage": "Deprecated. Use `powermodeReborn.explosions.customExplosions` instead."
           },
-          "powermode.backgroundMode": {
+          "powermodeReborn.backgroundMode": {
             "default": null,
-            "markdownDeprecationMessage": "Deprecated. Use `powermode.explosions.backgroundMode` instead."
+            "markdownDeprecationMessage": "Deprecated. Use `powermodeReborn.explosions.backgroundMode` instead."
           },
-          "powermode.gifMode": {
+          "powermodeReborn.gifMode": {
             "default": null,
-            "markdownDeprecationMessage": "Deprecated. Use `powermode.explosions.gifMode` instead."
+            "markdownDeprecationMessage": "Deprecated. Use `powermodeReborn.explosions.gifMode` instead."
           },
-          "powermode.explosionOrder": {
+          "powermodeReborn.explosionOrder": {
             "default": null,
-            "markdownDeprecationMessage": "Deprecated. Use `powermode.explosions.explosionOrder` instead."
+            "markdownDeprecationMessage": "Deprecated. Use `powermodeReborn.explosions.explosionOrder` instead."
           },
-          "powermode.explosionDuration": {
+          "powermodeReborn.explosionDuration": {
             "default": null,
-            "markdownDeprecationMessage": "Deprecated. Use `powermode.explosions.duration` instead."
+            "markdownDeprecationMessage": "Deprecated. Use `powermodeReborn.explosions.duration` instead."
           },
-          "powermode.customCss": {
+          "powermodeReborn.customCss": {
             "default": null,
-            "markdownDeprecationMessage": "Deprecated. Use `powermode.explosions.customCss` instead."
+            "markdownDeprecationMessage": "Deprecated. Use `powermodeReborn.explosions.customCss` instead."
           }
         }
       }

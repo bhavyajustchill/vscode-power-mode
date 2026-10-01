@@ -5,7 +5,7 @@ import { getDeprecatedConfigValue, isConfigSet } from './config';
 import { ConfigurationKeys, DeprecatedConfigurationKeys } from "./configuration-keys";
 
 export const migrateConfiguration = () => {
-    const config = vscode.workspace.getConfiguration("powermode");
+    const config = vscode.workspace.getConfiguration("powermodeReborn");
 
     DeprecatedConfigurationKeys.forEach((key) => {
         const configTarget = isConfigSet(key, config);

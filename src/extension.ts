@@ -47,11 +47,11 @@ export function activate(context: vscode.ExtensionContext) {
     // Try to migrate any existing configuration files
     migrateConfiguration();
 
-    const enableCommand = 'powermode.enablePowerMode';
-    const disableCommand = 'powermode.disablePowerMode';
+    const enableCommand = 'powermodeReborn.enablePowerMode';
+    const disableCommand = 'powermodeReborn.disablePowerMode';
 
     const setEnabled = (value: boolean) => {
-        const config = vscode.workspace.getConfiguration("powermode");
+        const config = vscode.workspace.getConfiguration("powermodeReborn");
         updateConfig("enabled", value, config);
     };
 
@@ -109,7 +109,7 @@ function resetState() {
 }
 
 function onDidChangeConfiguration() {
-    const config = vscode.workspace.getConfiguration('powermode');
+    const config = vscode.workspace.getConfiguration('powermodeReborn');
     const themeId = getConfigValue<string>("presets", config);
     const theme = getThemeConfig(themeId)
 
