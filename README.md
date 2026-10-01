@@ -3,7 +3,7 @@
 > **VS Code Power Mode Reborn** is a maintained fork of [Power Mode](https://github.com/hoovercj/vscode-power-mode) by [Cody Hoover](https://github.com/hoovercj), updated to work with modern versions of VS Code (1.88 and higher).
 > All credit for the original extension goes to Cody Hoover and its contributors.
 >
-> Settings use the `powermodeReborn.*` namespace, so this extension can be installed alongside the original without conflicts. If you are coming from the original extension, copy your `powermode.*` settings over and rename them to `powermodeReborn.*`.
+> Settings use the `powermodeReborn.*` namespace, so this extension can be installed alongside the original without conflicts. If you are coming from the original extension, your `powermode.*` settings are imported automatically the first time Power Mode Reborn starts. Existing `powermodeReborn.*` settings are never overwritten, and your original settings are left untouched.
 
 Power Mode is one of the most requested extensions for VS Code. Unfortunately, they said it couldn't be done...
 
@@ -102,6 +102,8 @@ If you can provide some lightweight, attractive gifs that improve how power mode
 * Thanks to [@horvay](https://github.com/horvay) for giving me ideas to get around the limitations I had in v0.0.1
 
 ## Changelog:
+- Reborn v1.1.0
+  - Automatically import settings from the original Power Mode extension (`powermode.*`) on first start
 - Reborn v1.0.0
   - Forked from Power Mode v3.0.2 as VS Code Power Mode Reborn
   - Fix the editor combo meter not being positioned on the right side of the editor in VS Code 1.88 and higher

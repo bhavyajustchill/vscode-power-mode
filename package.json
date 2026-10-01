@@ -2,7 +2,7 @@
   "name": "vscode-power-mode-reborn",
   "displayName": "VS Code Power Mode Reborn",
   "description": "Power Mode, reborn for modern VS Code. Your code is powerful, unleash it! A maintained fork of hoovercj/vscode-power-mode with fixes for VS Code 1.88+.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "publisher": "bhavyajustchill",
   "icon": "images/icon-large.png",
   "author": {

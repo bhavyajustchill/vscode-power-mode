@@ -11,6 +11,7 @@ import { ScreenShaker } from './screen-shaker/screen-shaker';
 import { CursorExploder } from './cursor-exploder/cursor-exploder';
 import { ComboPlugin } from './combo/combo-plugin';
 import { migrateConfiguration } from './config/configuration-migrator';
+import { importLegacySettings } from './config/legacy-settings-importer';
 
 // Config values
 let enabled = false;
@@ -43,7 +44,15 @@ let themes: {[key: string]: ThemeConfig} = {
 let combo = 0;
 let isPowermodeActive = false;
 
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
+    // Import the settings of the original Power Mode extension before migrating them,
+    // so that imported deprecated settings are migrated as well
+    try {
+        await importLegacySettings(context);
+    } catch (e) {
+        console.error("Power Mode Reborn: Failed to import the original Power Mode settings", e);
+    }
+
     // Try to migrate any existing configuration files
     migrateConfiguration();
 
