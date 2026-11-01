@@ -4,7 +4,7 @@
   "description": "Power Mode, reborn for modern VS Code. Your code is powerful, unleash it! A maintained fork of hoovercj/vscode-power-mode with fixes for VS Code 1.88+.",
   "version": "1.1.3",
   "publisher": "BhavyaJustChilll",
-  "icon": "images/icon-large.png",
+  "icon": "images/icon.png",
   "author": {
     "name": "Bhavya Popat",
     "url": "https://github.com/bhavyajustchill"

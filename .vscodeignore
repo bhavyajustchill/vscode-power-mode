@@ -12,3 +12,4 @@ releases/**
 .env
 .github/**
 PUBLISH.md
+images/icon-large.png
