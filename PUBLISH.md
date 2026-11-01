@@ -5,7 +5,7 @@
 | VS Code Marketplace | `BhavyaJustChilll` | `power-mode-reborn` | `BhavyaJustChilll.power-mode-reborn` |
 | Open VSX | `bhavyajustchill` | `vscode-power-mode-reborn` | `bhavyajustchill.vscode-power-mode-reborn` |
 
-`package.json` holds the Marketplace values. The Marketplace name differs because `vscode-power-mode-reborn` is reserved there by a stuck extension under the old `bhavyajustchill` publisher, and names must be unique across the whole Marketplace.
+`package.json` holds the Marketplace values. The Marketplace name differs because `vscode-power-mode-reborn` is reserved there by a stuck extension under the old `bhavyajustchill` publisher, and names must be unique across the whole Marketplace. The same stuck extension holds the display name "VS Code Power Mode Reborn", so the extension is called "Power Mode Reborn for VS Code" (on both registries).
 
 Releases go out through GitHub Actions (`.github/workflows/publish.yml`), using Trusted Publishing on both registries, so no tokens are stored in GitHub. The workflow packages the extension for the Marketplace. For Open VSX it repackages with `"publisher"` and `"name"` set to the Open VSX values, because Open VSX takes the extension ID from those fields. Otherwise the two packages are identical.
 
