@@ -1,52 +1,56 @@
-### Prerequisites
+# Publishing
 
-1. Sign in at https://marketplace.visualstudio.com/manage and create a publisher with the ID bhavyajustchill.
-2. Create an Azure DevOps Personal Access Token with the Marketplace → Manage scope.
+- VS Code Marketplace publisher: `BhavyaJustChilll` (this is `"publisher"` in `package.json`).
+- Open VSX namespace: `bhavyajustchill` (no extra l).
 
-### Publishing
+Releases go out through GitHub Actions (`.github/workflows/publish.yml`). The workflow packages the extension for the Marketplace. For Open VSX it repackages with `"publisher"` set to `bhavyajustchill`, because Open VSX takes the namespace from that field. The two packages differ only in the publisher.
 
-The newer vsce saves the token on your machine, outside the project.
-here, bhavyajustchill is id
+## One-time setup
 
-```bash
-npx --yes @vscode/vsce@latest login bhavyajustchill
-```
+### VS Code Marketplace (Trusted Publishing, no token)
 
-# paste the token when prompted
+1. Go to https://marketplace.visualstudio.com/manage/publishers/BhavyaJustChilll.
+2. Open **Trusted Publishing** → **Create** and fill in:
+   - Policy name: `GitHub release workflow`
+   - Repository owner: `bhavyajustchill`
+   - Repository: `vscode-power-mode`
+   - Workflow: `publish.yml`
+   - Environment: leave empty
 
-```bash
-npx --yes @vscode/vsce@latest publish
-```
+### Open VSX
 
-After that, publish works without the token for as long as it's valid.
+The `bhavyajustchill` namespace already exists and is verified.
 
-# Publishing to Open VSX (one-time setup)
+1. At https://open-vsx.org, go to your profile → Access Tokens and copy a token (or generate a new one).
+2. In the GitHub repo, go to Settings → Secrets and variables → Actions and add a secret named `OVSX_PAT` with the token.
+   If the secret isn't set, the workflow skips Open VSX.
 
-1. Create an Eclipse account: sign up at https://accounts.eclipse.org. Open VSX is run by the Eclipse Foundation. Put your GitHub username in the account profile.
-2. Log in: go to https://open-vsx.org and log in with GitHub.
-3. Sign the agreemen connect the Eclipseaccount and sign the Publisher Agreement.
-4. Get a token: in your profile settings, go to Access Tokens →
-   Generate New Token and copy it.
-5. Create your namespace and publish. Run these in terminalt:
+## Each release
 
-```bash
-# Make your Open VSX token available to the commands in this terminal
-$env:OVSX_PAT = "<your open-vsx token>"
+1. Bump `"version"` in `package.json` (e.g. `1.1.0` → `1.1.1`) and commit.
+2. Tag the commit with the same version and push the tag:
 
-# Create the namespace (one time only)
-npx --yes ovsx create-namespace bhavyajustchill
+   ```bash
+   git tag v1.1.1
+   git push origin v1.1.1
+   ```
 
-# Publish the extension into that namespace
-npx --yes ovsx publish
-```
+The workflow fails if the tag doesn't match the version in `package.json`. The built .vsix is also uploaded as a workflow artifact named `vsix`.
 
-Each release from now on
+You can also start the workflow by hand from the Actions tab (**Publish** → **Run workflow**). That only shows up once the workflow file is on the default branch (`master`).
 
-Publish to both registries:
+## Publishing manually (fallback)
 
 ```bash
-npx --yes @vscode/vsce@latest publish   # VS Code Marketplace
-npx --yes ovsx publish                  # Open VSX
+# VS Code Marketplace (needs `vsce login BhavyaJustChilll` first)
+npx --yes @vscode/vsce@4 package --no-dependencies
+npx --yes @vscode/vsce@4 publish --packagePath vscode-power-mode-reborn-<version>.vsix
+
+# Open VSX: temporarily switch the publisher, package, publish, then revert
+npm pkg set publisher=bhavyajustchill
+npx --yes @vscode/vsce@4 package --no-dependencies --out openvsx.vsix
+npx --yes ovsx publish openvsx.vsix --pat <your open-vsx token>
+npm pkg set publisher=BhavyaJustChilll
 ```
 
-You can also build the .vsix once with npx --yes @vscode/vsce@latest package and upload that same file to both, so they're guaranteed to match. Then run npx --yes ovsx publish vscode-power-mode-reborn-1.1.0.vsix.
+`vsce login` uses an Azure DevOps PAT (organization: All accessible organizations, scope: Marketplace → Manage). Global PATs are retired on December 1, 2026, so after that, publish through the workflow.
