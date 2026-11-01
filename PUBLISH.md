@@ -1,9 +1,13 @@
 # Publishing
 
-- VS Code Marketplace publisher: `BhavyaJustChilll` (this is `"publisher"` in `package.json`).
-- Open VSX namespace: `bhavyajustchill` (no extra l).
+| Registry | Publisher | Name | Extension ID |
+| --- | --- | --- | --- |
+| VS Code Marketplace | `BhavyaJustChilll` | `power-mode-reborn` | `BhavyaJustChilll.power-mode-reborn` |
+| Open VSX | `bhavyajustchill` | `vscode-power-mode-reborn` | `bhavyajustchill.vscode-power-mode-reborn` |
 
-Releases go out through GitHub Actions (`.github/workflows/publish.yml`). The workflow packages the extension for the Marketplace. For Open VSX it repackages with `"publisher"` set to `bhavyajustchill`, because Open VSX takes the namespace from that field. The two packages differ only in the publisher.
+`package.json` holds the Marketplace values. The Marketplace name differs because `vscode-power-mode-reborn` is reserved there by a stuck extension under the old `bhavyajustchill` publisher, and names must be unique across the whole Marketplace.
+
+Releases go out through GitHub Actions (`.github/workflows/publish.yml`), using Trusted Publishing on both registries, so no tokens are stored in GitHub. The workflow packages the extension for the Marketplace. For Open VSX it repackages with `"publisher"` and `"name"` set to the Open VSX values, because Open VSX takes the extension ID from those fields. Otherwise the two packages are identical.
 
 ## One-time setup
 
@@ -17,23 +21,34 @@ Releases go out through GitHub Actions (`.github/workflows/publish.yml`). The wo
    - Workflow: `publish.yml`
    - Environment: leave empty
 
-### Open VSX
+### Open VSX (Trusted Publishing, no token)
 
-The `bhavyajustchill` namespace already exists and is verified.
+The `bhavyajustchill` namespace already exists and is verified. On https://open-vsx.org, register a trusted publisher for it:
 
-1. At https://open-vsx.org, go to your profile → Access Tokens and copy a token (or generate a new one).
-2. In the GitHub repo, go to Settings → Secrets and variables → Actions and add a secret named `OVSX_PAT` with the token.
-   If the secret isn't set, the workflow skips Open VSX.
+- Namespace: `bhavyajustchill`
+- Publisher: GitHub
+- Extension: `vscode-power-mode-reborn`
+- Organization or user name: `bhavyajustchill`
+- Repository name: `vscode-power-mode`
+- Workflow filename: `publish.yml`
+- Environment name: leave empty
 
 ## Each release
 
-1. Bump `"version"` in `package.json` (e.g. `1.1.0` → `1.1.1`) and commit.
-2. Tag the commit with the same version and push the tag:
+Add the new version's entry to the changelog in `README.md` first, so it ships in the package. Then:
 
-   ```bash
-   git tag v1.1.1
-   git push origin v1.1.1
-   ```
+```bash
+git add -A
+git commit -m "Describe your changes"
+npm version patch -m "Release %s"
+git push origin reborn --follow-tags
+```
+
+- `npm version patch` bumps the version (e.g. `1.1.1` → `1.1.2`), commits it as "Release 1.1.2", and creates the tag `v1.1.2`. It refuses to run if there are uncommitted changes.
+- Use `minor` (`1.1.x` → `1.2.0`), `major` (`1.x` → `2.0.0`), or an exact version (`npm version 1.3.0 -m "Release %s"`) instead of `patch` as needed.
+- `--follow-tags` pushes the branch and the new tag together. The tag push is what starts publishing. If you forgot it, push the tag on its own: `git push origin v1.1.2`.
+
+Watch the run at https://github.com/bhavyajustchill/vscode-power-mode/actions. If only one registry failed, fix the cause and press **Re-run jobs**; the registry that already has the version is skipped.
 
 The workflow fails if the tag doesn't match the version in `package.json`. The built .vsix is also uploaded as a workflow artifact named `vsix`.
 
@@ -44,13 +59,13 @@ You can also start the workflow by hand from the Actions tab (**Publish** → **
 ```bash
 # VS Code Marketplace (needs `vsce login BhavyaJustChilll` first)
 npx --yes @vscode/vsce@4 package --no-dependencies
-npx --yes @vscode/vsce@4 publish --packagePath vscode-power-mode-reborn-<version>.vsix
+npx --yes @vscode/vsce@4 publish --packagePath power-mode-reborn-<version>.vsix
 
-# Open VSX: temporarily switch the publisher, package, publish, then revert
-npm pkg set publisher=bhavyajustchill
+# Open VSX: temporarily switch publisher and name, package, publish, then revert
+npm pkg set publisher=bhavyajustchill name=vscode-power-mode-reborn
 npx --yes @vscode/vsce@4 package --no-dependencies --out openvsx.vsix
 npx --yes ovsx publish openvsx.vsix --pat <your open-vsx token>
-npm pkg set publisher=BhavyaJustChilll
+npm pkg set publisher=BhavyaJustChilll name=power-mode-reborn
 ```
 
 `vsce login` uses an Azure DevOps PAT (organization: All accessible organizations, scope: Marketplace → Manage). Global PATs are retired on December 1, 2026, so after that, publish through the workflow.

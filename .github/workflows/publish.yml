@@ -36,8 +36,9 @@ jobs:
           fi
 
       - name: Package extension
+        id: package
         run: |
-          VSIX="vscode-power-mode-reborn-$(node -p "require('./package.json').version").vsix"
+          VSIX="$(node -p "require('./package.json').name")-$(node -p "require('./package.json').version").vsix"
           # No runtime "dependencies" in package.json, so skip vsce's npm-list scan.
           npx --yes @vscode/vsce@4 package --no-dependencies --out "$VSIX"
           echo "VSIX=$VSIX" >> "$GITHUB_ENV"
@@ -52,18 +53,18 @@ jobs:
         run: npx --yes @vscode/vsce@4 publish --oidc --skip-duplicate --packagePath "$VSIX"
 
       - name: Publish to Open VSX
+        # Run even if the Marketplace step failed, so one registry can't block the other.
+        if: ${{ !cancelled() && steps.package.outcome == 'success' }}
         env:
-          OVSX_PAT: ${{ secrets.OVSX_PAT }}
-          # Open VSX namespace is different from the Marketplace publisher (BhavyaJustChilll).
+          # Open VSX keeps the original namespace and name; the Marketplace uses
+          # BhavyaJustChilll.power-mode-reborn (see README "Install").
           OVSX_NAMESPACE: bhavyajustchill
+          OVSX_NAME: vscode-power-mode-reborn
         run: |
-          if [ -z "$OVSX_PAT" ]; then
-            echo "OVSX_PAT secret not set, skipping Open VSX."
-            exit 0
-          fi
-          # Open VSX takes the namespace from "publisher", so repackage with the Open VSX one.
-          npm pkg set publisher="$OVSX_NAMESPACE"
-          OVSX_VSIX="${VSIX%.vsix}-openvsx.vsix"
+          # Open VSX takes the namespace and extension from "publisher" and "name",
+          # so repackage with the Open VSX values.
+          npm pkg set publisher="$OVSX_NAMESPACE" name="$OVSX_NAME"
+          OVSX_VSIX="$OVSX_NAME-$(node -p "require('./package.json').version").vsix"
           npx --yes @vscode/vsce@4 package --no-dependencies --out "$OVSX_VSIX"
-          # ovsx reads the token from the OVSX_PAT env var.
-          npx --yes ovsx publish "$OVSX_VSIX" --skip-duplicate
+          # Trusted Publishing: exchanges this job's GitHub OIDC token, no OVSX_PAT needed.
+          npx --yes ovsx@1 publish "$OVSX_VSIX" --trusted-publishing --skip-duplicate
