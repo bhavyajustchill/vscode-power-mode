@@ -12,7 +12,7 @@
 | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=BhavyaJustChilll.power-mode-reborn) | `BhavyaJustChilll` | `BhavyaJustChilll.power-mode-reborn` |
 | [Open VSX](https://open-vsx.org/extension/bhavyajustchill/vscode-power-mode-reborn) | `bhavyajustchill` | `bhavyajustchill.vscode-power-mode-reborn` |
 
-**Why the publishers differ:** since October 2026, the VS Code Marketplace has returned HTTP 429 (Too Many Requests) errors for the `BhavyaJustChill` publisher, so the extension can't be published there. Starting with v1.1.1, it's published to the Marketplace under a new publisher, `BhavyaJustChilll` (with an extra "l"), as `power-mode-reborn`, because the old name is still reserved there. Open VSX is unaffected and keeps `bhavyajustchill.vscode-power-mode-reborn`. Both listings ship the same extension.
+**Why the publishers differ:** since October 2026, the VS Code Marketplace has returned HTTP 429 (Too Many Requests) errors for the `BhavyaJustChill` publisher, so the extension can't be published there. Starting with v1.1.2, it's published to the Marketplace under a new publisher, `BhavyaJustChilll` (with an extra "l"), as `power-mode-reborn`, because the old name is still reserved there. Open VSX is unaffected and keeps `bhavyajustchill.vscode-power-mode-reborn`. Both listings ship the same extension.
 
 Power Mode is one of the most requested extensions for VS Code. Unfortunately, they said it couldn't be done...
 
@@ -111,7 +111,7 @@ If you can provide some lightweight, attractive gifs that improve how power mode
 * Thanks to [@horvay](https://github.com/horvay) for giving me ideas to get around the limitations I had in v0.0.1
 
 ## Changelog:
-- Reborn v1.1.1
+- Reborn v1.1.2
   - Published to the VS Code Marketplace as `BhavyaJustChilll.power-mode-reborn`, because the `BhavyaJustChill` publisher has returned HTTP 429 errors since October 2026. Open VSX stays on `bhavyajustchill.vscode-power-mode-reborn` (see [Install](#install))
 - Reborn v1.1.0
   - Automatically import settings from the original Power Mode extension (`powermode.*`) on first start
